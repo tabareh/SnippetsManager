@@ -25,18 +25,29 @@
       <tr *ngFor="let item of filteredTags; index as i">
         <th><b>{{i+1}}</b></th>
         <td>
-          <div class="input-group">
+          <div class="input-group" [ngClass]="{'has-warning': tagTitle.dirty}">
             <input 
               type="text" 
-              class="form-control" 
-              placeholder="Type in the tag you're searching for..." 
+              class="form-control form-control-sm" 
+              placeholder="Enter the tag name here..." 
               [(ngModel)]="item.name"
               placement="top"
               [ngbTooltip]="item.name" 
-              (keydown.enter)="updateTag(item.id)">
-              <!--TODO: Add tooltips to buttons-->
-            <button class="input-group-addon btn btn-success fa fa-check" (click)="updateTag(item.id)"></button>
-            <button class="input-group-addon btn btn-danger fa fa-minus" (click)="removeTag(item.id)"></button>
+              (keydown.enter)="updateTag(item.id, tagTitle)"
+              #tagTitle="ngModel">
+              <!--TODO: Add undo change button-->
+            <button 
+              class="input-group-addon btn btn-success fa fa-check" 
+              (click)="updateTag(item.id, tagTitle);"
+              placement="top"
+              ngbTooltip="Submit changes">
+            </button>
+            <button 
+              class="input-group-addon btn btn-danger fa fa-minus" 
+              (click)="removeTag(item.id)"
+              placement="right"
+              ngbTooltip="Remove tag">
+            </button>
           </div>
         </td>
       </tr>

@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import { Tag } from '../models';
 import { Observable } from 'rxjs';
 import { ConfigService } from '../shared';
+import { FormControl, NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-tags',
@@ -15,7 +16,17 @@ export class TagsComponent {
   private searchInput: string = "";
 
   private get filteredTags(): Tag[] {
-    return this.tags.filter(t => t.name.includes(this.searchInput));
+    if (!this.searchInput) {
+      return this.tags;
+    }
+    return this.tags.filter(t => {
+      if (t.name) {
+        return t.name.toLowerCase().includes(this.searchInput.toLocaleLowerCase());
+      } else {
+        console.log(t);
+        return false;
+      }
+    });
 
   }
 
@@ -51,13 +62,14 @@ export class TagsComponent {
     });
   }
 
-  public updateTag(id: number) {
+  public updateTag(id: number, tagTitleInput: NgModel) {
     const tag: Tag = this.tags.filter(t => t.id === id)[0];
     // console.log('updating ' + JSON.stringify(tag));
     // console.log('all tags after:' + JSON.stringify(this.tags));
     this.http.put(`${this.config.baseApiUrl}/api/tags/${id}`, tag).subscribe(res => {
       console.log(res);
-      this.fetchTags();
+      console.log(tagTitleInput);
+      tagTitleInput.control.markAsPristine();
     });
   }
 
