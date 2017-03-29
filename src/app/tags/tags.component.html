@@ -34,6 +34,7 @@
               placement="top"
               [ngbTooltip]="item.name" 
               (keydown.enter)="updateTag(item.id)">
+              <!--TODO: Add tooltips to buttons-->
             <button class="input-group-addon btn btn-success fa fa-check" (click)="updateTag(item.id)"></button>
             <button class="input-group-addon btn btn-danger fa fa-minus" (click)="removeTag(item.id)"></button>
           </div>
