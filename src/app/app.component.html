@@ -1,9 +1,28 @@
-<div class="jumbotron">
-  <h1>Header</h1>
-</div>
+ <nav class="navbar navbar-toggleable-md navbar-inverse  bg-inverse">
+   <!--TODO: fix the toggler button-->
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item" [ngClass]="{'active': homeRoute.isActive && !tagsRoute.isActive}">
+            <a class="nav-link" routerLink="/" routerLinkActive #homeRoute="routerLinkActive">Dashboard</a>
+          </li>
+          <li class="nav-item" [ngClass]="{'active': tagsRoute.isActive}">
+            <a class="nav-link" routerLink="/tags" routerLinkActive #tagsRoute="routerLinkActive">Tags</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+
 <router-outlet>
 
 </router-outlet>
-<div class="jumbotron">
-  <h1>Footer</h1>
-</div>
+<nav class="navbar fixed-bottom navbar-inverse bg-inverse">
+  <p class="navbar-brand">Copyright Tabareh Crop.</p>
+</nav>

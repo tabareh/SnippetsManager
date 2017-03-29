@@ -1,4 +1,3 @@
-<div class="jumbotron">
   <h1>Manage Tags</h1>
   <div class="row">
   <div class="col-sm-4 ">
@@ -11,11 +10,10 @@
             [(ngModel)]="searchInput" 
             (keydown.enter)="addTag();"
             #sb>
-      <button class="input-group-addon btn btn-danger fa fa-remove" (click)="searchInput=''; sb.focus()"></button>
-      <button class="input-group-addon btn btn-primary fa fa-plus" (click)="addTag();sb.focus()"></button>
+      <span class="input-group-addon btn btn-danger fa fa-remove" (click)="searchInput=''; sb.focus()"></span>
+      <span class="input-group-addon btn btn-primary fa fa-plus" (click)="addTag();sb.focus()"></span>
     </div>
   </div>
-</div>
 </div>
 
 <!--TODO: Apply pagination for the items-->
@@ -36,18 +34,18 @@
               (keydown.enter)="updateTag(item.id, tagTitle)"
               #tagTitle="ngModel">
               <!--TODO: Add undo change button-->
-            <button 
+            <span 
               class="input-group-addon btn btn-success fa fa-check" 
               (click)="updateTag(item.id, tagTitle);"
               placement="top"
               ngbTooltip="Submit changes">
-            </button>
-            <button 
+            </span>
+            <span 
               class="input-group-addon btn btn-danger fa fa-minus" 
               (click)="removeTag(item.id)"
               placement="right"
               ngbTooltip="Remove tag">
-            </button>
+            </span>
           </div>
         </td>
       </tr>
