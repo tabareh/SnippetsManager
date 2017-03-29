@@ -58,7 +58,11 @@ export class TagsComponent {
   public removeTag(id: number) {
     this.http.delete(`${this.config.baseApiUrl}/api/tags/${id}`).subscribe(res => {
       console.log(res);
-      this.fetchTags();
+      if (res.status === 204) {
+        let i = this.tags.indexOf(this.tags.filter(t => t.id === id)[0]);
+        this.tags.splice(i, 1);
+
+      }
     });
   }
 
@@ -69,7 +73,9 @@ export class TagsComponent {
     this.http.put(`${this.config.baseApiUrl}/api/tags/${id}`, tag).subscribe(res => {
       console.log(res);
       console.log(tagTitleInput);
-      tagTitleInput.control.markAsPristine();
+      if (res.status === 204) {
+        tagTitleInput.control.markAsPristine();
+      }
     });
   }
 
