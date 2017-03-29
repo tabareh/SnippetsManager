@@ -1,16 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
-import { Tag } from './models';
+import { Tag } from '../models';
 import { Observable } from 'rxjs';
-import { ConfigService } from './shared';
+import { ConfigService } from '../shared';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-tags',
+  templateUrl: './tags.component.html',
+  styleUrls: ['./tags.component.css']
 })
-export class AppComponent {
-
+export class TagsComponent {
 
   private tags: Tag[] = [];
   private searchInput: string = "";
@@ -61,6 +60,5 @@ export class AppComponent {
       this.fetchTags();
     });
   }
-
 
 }
