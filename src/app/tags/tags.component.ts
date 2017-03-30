@@ -51,6 +51,9 @@ export class TagsComponent {
   public addTag() {
     this.http.post(`${this.config.baseApiUrl}/api/tags`, { name: this.searchInput }).subscribe(res => {
       console.log(res);
+      if (res.status === 201) {
+        // TODO: just add the added item in th list instead of fetching all tags
+      }
       this.fetchTags();
     });
   }
