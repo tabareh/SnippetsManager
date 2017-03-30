@@ -8,6 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TagsComponent } from './tags/tags.component';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { TreeModule } from 'angular-tree-component';
 
 export const ROUTES = [
   { path: '', component: HomeComponent },
@@ -27,7 +28,8 @@ export const ROUTES = [
     HttpModule,
     SharedModule,
     NgbModule.forRoot(),
-    RouterModule.forRoot(ROUTES)
+    RouterModule.forRoot(ROUTES),
+    TreeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
