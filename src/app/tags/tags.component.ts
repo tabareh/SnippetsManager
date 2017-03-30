@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 import { Tag } from '../models';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ConfigService } from '../shared';
 import { FormControl, NgModel } from '@angular/forms';
 
@@ -14,6 +14,7 @@ export class TagsComponent {
 
   private tags: Tag[] = [];
   private searchInput: string = "";
+  private subscriptions: Subscription[] = [];
 
   private get filteredTags(): Tag[] {
     if (!this.searchInput) {
@@ -32,12 +33,12 @@ export class TagsComponent {
 
   constructor(private http: Http,
     private config: ConfigService) {
-    this.fetchTags();
+    this.subscriptions.push(this.fetchTags());
   }
 
-  public fetchTags(): void {
+  public fetchTags(): Subscription {
     this.tags = [];
-    this.http.get(`${this.config.baseApiUrl}/api/tags`).subscribe(res => {
+    return this.http.get(`${this.config.baseApiUrl}/api/tags`).subscribe(res => {
       console.log(res);
       const body: any = res.json();
       for (const item of body) {
@@ -54,7 +55,7 @@ export class TagsComponent {
       if (res.status === 201) {
         // TODO: just add the added item in th list instead of fetching all tags
       }
-      this.fetchTags();
+      this.subscriptions.push(this.fetchTags());
     });
   }
 
@@ -80,6 +81,12 @@ export class TagsComponent {
         tagTitleInput.control.markAsPristine();
       }
     });
+  }
+
+  OnDestroy() {
+    for (let item of this.subscriptions) {
+        item.unsubscribe();
+    }
   }
 
 }
