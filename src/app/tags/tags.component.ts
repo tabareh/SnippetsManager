@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Http } from '@angular/http';
 import { Tag } from '../models';
 import { Observable, Subscription } from 'rxjs';
@@ -10,7 +10,7 @@ import { FormControl, NgModel } from '@angular/forms';
   templateUrl: './tags.component.html',
   styleUrls: ['./tags.component.css']
 })
-export class TagsComponent {
+export class TagsComponent implements OnDestroy{
 
   private tags: Tag[] = [];
   private searchInput: string = "";
@@ -33,12 +33,12 @@ export class TagsComponent {
 
   constructor(private http: Http,
     private config: ConfigService) {
-    this.subscriptions.push(this.fetchTags());
+    this.fetchTags();
   }
 
   public fetchTags(): Subscription {
     this.tags = [];
-    return this.http.get(`${this.config.baseApiUrl}/api/tags`).subscribe(res => {
+    return this.http.get(`${this.config.baseApiUrl}${this.config.tagsApiUrl}`).subscribe(res => {
       console.log(res);
       const body: any = res.json();
       for (const item of body) {
@@ -50,17 +50,17 @@ export class TagsComponent {
   }
 
   public addTag() {
-    this.http.post(`${this.config.baseApiUrl}/api/tags`, { name: this.searchInput }).subscribe(res => {
+    this.http.post(`${this.config.baseApiUrl}${this.config.tagsApiUrl}`, { name: this.searchInput }).subscribe(res => {
       console.log(res);
       if (res.status === 201) {
         // TODO: just add the added item in th list instead of fetching all tags
       }
-      this.subscriptions.push(this.fetchTags());
+      this.fetchTags();
     });
   }
 
   public removeTag(id: number) {
-    this.http.delete(`${this.config.baseApiUrl}/api/tags/${id}`).subscribe(res => {
+    this.http.delete(`${this.config.baseApiUrl}${this.config.tagsApiUrl}/${id}`).subscribe(res => {
       console.log(res);
       if (res.status === 204) {
         let i = this.tags.indexOf(this.tags.filter(t => t.id === id)[0]);
@@ -74,7 +74,7 @@ export class TagsComponent {
     const tag: Tag = this.tags.filter(t => t.id === id)[0];
     // console.log('updating ' + JSON.stringify(tag));
     // console.log('all tags after:' + JSON.stringify(this.tags));
-    this.http.put(`${this.config.baseApiUrl}/api/tags/${id}`, tag).subscribe(res => {
+    this.http.put(`${this.config.baseApiUrl}${this.config.tagsApiUrl}/${id}`, tag).subscribe(res => {
       console.log(res);
       console.log(tagTitleInput);
       if (res.status === 204) {
@@ -83,8 +83,8 @@ export class TagsComponent {
     });
   }
 
-  OnDestroy() {
-    for (let item of this.subscriptions) {
+  ngOnDestroy() {
+    for (const item of this.subscriptions) {
         item.unsubscribe();
     }
   }
