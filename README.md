@@ -1,4 +1,4 @@
-# This project is obsolete.
+# This project is obsolete!
 this project started like an idea and never followd up after.
 
 # SnippetsManager
