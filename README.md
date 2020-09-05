@@ -1,4 +1,5 @@
 # This project is obsolete and never developped.
+this project started like an idea and never followd up after.
 # SnippetsManager
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
